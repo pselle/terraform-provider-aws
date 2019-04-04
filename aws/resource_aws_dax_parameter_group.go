@@ -31,9 +31,10 @@ func resourceAwsDaxParameterGroup() *schema.Resource {
 				ForceNew: true,
 			},
 			"parameters": {
-				Type:     schema.TypeSet,
-				Optional: true,
-				Computed: true,
+				Type:       schema.TypeSet,
+				Optional:   true,
+				Computed:   true,
+				ConfigMode: schema.SchemaConfigModeAttr,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": {

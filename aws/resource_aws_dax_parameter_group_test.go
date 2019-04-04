@@ -32,6 +32,13 @@ func TestAccAwsDaxParameterGroup_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("aws_dax_parameter_group.test", "parameters.#", "2"),
 				),
 			},
+			{
+				Config: testAccDaxParameterGroupConfig_block(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAwsDaxParameterGroupExists("aws_dax_parameter_group.test"),
+					resource.TestCheckResourceAttr("aws_dax_parameter_group.test", "parameters.#", "0"),
+				),
+			},
 		},
 	})
 }
@@ -116,6 +123,15 @@ resource "aws_dax_parameter_group" "test" {
     name = "record-ttl-millis"
     value = "100000"
   }
+}
+`, rName)
+}
+
+func testAccDaxParameterGroupConfig_block(rName string) string {
+	return fmt.Sprintf(`
+resource "aws_dax_parameter_group" "test" {
+  name = "%s"
+  parameters = []
 }
 `, rName)
 }
